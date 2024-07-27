@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <v-container class="d-flex justify-space-between ga-3 pb-0 pr-0 pl-0">
+  <div class="grid-container pt-3 pb-3">
     <div class="w-100 heading-block">
       <span>Метки</span>
     </div>
@@ -16,9 +16,9 @@
     <div class="w-100 heading-block">
       <span>Пароль</span>
     </div>
-  </v-container>
+  </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

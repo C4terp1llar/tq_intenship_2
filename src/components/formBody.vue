@@ -5,11 +5,7 @@ import FormItem from "@/components/formItem.vue";
 
 <template>
   <v-form>
-
     <form-item/>
-    <form-item/>
-    <form-item/>
-
   </v-form>
 </template>
 
