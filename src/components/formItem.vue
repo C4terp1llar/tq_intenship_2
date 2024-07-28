@@ -59,10 +59,14 @@ const handleChangePassword = (i: number, e: any) => {
 
   accountsStore.handleChangePassword(i, newPassInput);// если длина ок - вызываем ф-ию из стора и меняем пароль у записи
 }
+
+const handleDeleteAccount = (i: number) => {
+  accountsStore.deleteAccount(i)
+};
 </script>
 
 <template>
-  <div class="grid-container pb-2" v-for="(account, i) in accountsStore.accountsList" :key="i">
+  <div class="grid-container-ready pb-2" v-for="(account, i) in accountsStore.accountsList" :key="i">
 
     <v-text-field
         v-model="tagsValue[i]"
@@ -105,6 +109,8 @@ const handleChangePassword = (i: number, e: any) => {
         @click:append-inner="isPasswordVisible[i] = !isPasswordVisible[i]"
         @focusout="(e: Event) => handleChangePassword(i, e)"
     ></v-text-field>
+
+    <v-btn size="small" icon="mdi-delete" class="mt-1" color="red" @click="handleDeleteAccount(i)"></v-btn>
   </div>
 </template>
 

@@ -19,10 +19,7 @@ const handleSubmitTag = () => {
 }
 
 const handleSubmit = () => {
-  console.log('Submitting form:', { tags: tags.value, type: type.value, login: login.value, password: password.value });
-
   if (type.value === 'LDAP' && login.value.length >= 1){
-    console.log('пуш лдап')
     accountsStore.addNewAccount({
       tags: newTags.value,
       type: type.value,
@@ -32,7 +29,6 @@ const handleSubmit = () => {
     clearFields();
     accountsStore.additionFlag = !accountsStore.additionFlag;
   } else if (type.value === 'Локальная' && login.value.length >= 1 && password.value.length >= 1) {
-    console.log('пуш локал')
     accountsStore.addNewAccount({
       tags: newTags.value,
       type: type.value,

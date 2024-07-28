@@ -52,6 +52,11 @@ export const useAccountsStore = defineStore('accounts', () => {
     saveToLocalStorage();
   }
 
+  const deleteAccount = (i: number) => {
+    accountsList.splice(i, 1);
+    saveToLocalStorage();
+  };
+
   return {
     additionFlag,
     accountsList,
@@ -60,6 +65,7 @@ export const useAccountsStore = defineStore('accounts', () => {
     handleChangePasswordToNull,
     handleChangePassword,
     handleChangeLogin,
-    addNewAccount
+    addNewAccount,
+    deleteAccount
   };
 });
