@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import { ref} from "vue";
+import {computed, ref} from "vue";
 import {rules} from '@/utils/textValidation';
 import {useAccountsStore} from "@/stores/accounts";
-import {enterTags} from "@/utils/enterTag";
-import {enterLogins} from "@/utils/enterLogins";
 
 
 const accountsStore = useAccountsStore();
 
 const isPasswordVisible = ref<boolean[]>(accountsStore.accountsList.map(() => false)); // массив видимости паролей
 
-const tagsValue = ref<string[]>(enterTags(accountsStore.accountsList)); //использую хелпер, который из массива всех акков делает массив из тегов
-const loginsValue = ref<string[]>(enterLogins(accountsStore.accountsList)); //использую хелпер, который из массива всех акков делает массив из логинов
+const tagsValue = computed(() => {
+  let tagsArr: string[] = [];
+
+  for (const account of accountsStore.accountsList) {
+    const tagTexts = account.tags.map((tag) => tag.text).join("; ");
+    tagsArr.push(tagTexts);
+  }
+
+  return tagsArr;
+})
 
 const handleChangeTags = ( i: number, e: any) => {
   let newTagsInput: string = e.target.value; // берем значенеи из инпута
@@ -38,13 +44,20 @@ const handleChangeType = (i: number) => {
   return
 }
 
-
 const handleChangeLogin = (i: number, e: any) => {
   const newLoginInput: string = e.target.value; // берем значенеи из инпута
 
   if (!newLoginInput.length) return; // если длина нового логина ! то ретернимся и оставляем старый
 
   accountsStore.handleChangeLogin(i, newLoginInput);// если длина ок - вызываем ф-ию из стора и меняем логин у записи
+}
+
+const handleChangePassword = (i: number, e: any) => {
+  const newPassInput: string = e.target.value; // берем значенеи из инпута
+
+  if (!newPassInput.length) return; // если длина нового пароля ! то ретернимся и оставляем старый
+
+  accountsStore.handleChangePassword(i, newPassInput);// если длина ок - вызываем ф-ию из стора и меняем пароль у записи
 }
 </script>
 
@@ -57,7 +70,7 @@ const handleChangeLogin = (i: number, e: any) => {
         density="comfortable"
         variant="outlined"
         maxlength="50"
-        @focusout="(e: Event) => handleChangeTags(i, e)"
+        @blur="(e: Event) => handleChangeTags(i, e)"
     ></v-text-field>
 
     <v-select
@@ -70,12 +83,12 @@ const handleChangeLogin = (i: number, e: any) => {
     ></v-select>
 
     <v-text-field
-        v-model="loginsValue[i]"
+        v-model="account.login"
         class="align-center"
         density="comfortable"
         variant="outlined"
         maxlength="100"
-        :rules="[rules.required(loginsValue[i])]"
+        :rules="[rules.required(account.login)]"
         @focusout="(e: Event) => handleChangeLogin(i, e)"
     ></v-text-field>
 
@@ -90,6 +103,7 @@ const handleChangeLogin = (i: number, e: any) => {
         :append-inner-icon="isPasswordVisible[i] ? 'mdi-eye-off' : 'mdi-eye'"
         :type="isPasswordVisible[i] ? 'text' : 'password'"
         @click:append-inner="isPasswordVisible[i] = !isPasswordVisible[i]"
+        @focusout="(e: Event) => handleChangePassword(i, e)"
     ></v-text-field>
   </div>
 </template>
