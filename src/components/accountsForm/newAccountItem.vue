@@ -100,7 +100,7 @@ const handlePreventAccountCreation = () => {
         @focusout="handleSubmit"
     ></v-text-field>
 
-    <v-btn density="comfortable" icon="mdi-arrow-u-left-top" class="mt2" color="warning" @click="handlePreventAccountCreation"></v-btn>
+    <v-btn density="comfortable" icon="mdi-arrow-u-left-top" variant="text" class="mt2" color="warning" @click="handlePreventAccountCreation"></v-btn>
   </v-form>
 </template>
 

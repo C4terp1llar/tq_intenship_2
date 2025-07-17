@@ -1,6 +1,6 @@
 import {ref, reactive, watch} from 'vue';
 import { defineStore } from 'pinia';
-import type { IAccount } from "@/types";
+import type {IAccount, ITag} from "@/types";
 
 const LOCAL_STORAGE_KEY = 'accountsList';
 
@@ -22,7 +22,7 @@ export const useAccountsStore = defineStore('accounts', () => {
 
   const additionFlag = ref<boolean>(false);
 
-  const handleChangeTags = (newTags: { text: string }[], i: number) => {
+  const handleChangeTags = (newTags: ITag[], i: number) => {
     accountsList[i].tags = newTags;
     saveToLocalStorage();
   };

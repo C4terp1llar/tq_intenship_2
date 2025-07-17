@@ -14,7 +14,7 @@ const handleDeleteAccount = (i: number) => {
 </script>
 
 <template>
-  <v-btn density="comfortable" icon="mdi-delete" class="mt2" color="red" @click="handleDeleteAccount(index)"></v-btn>
+  <v-btn density="comfortable" icon="mdi-trash-can-outline" class="mt2" variant="text" color="red" @click="handleDeleteAccount(index)"></v-btn>
 </template>
 
 <style scoped>
