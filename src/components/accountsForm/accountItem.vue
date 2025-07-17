@@ -52,24 +52,24 @@ const handleChangeType = (i: number) => {
 const handleChangeLogin = (i: number, e: any) => {
   const newLoginInput: string = e.target.value; // берем значенеи из инпута
 
-  if (!newLoginInput.length) return; // если длина нового логина ! то ретернимся и оставляем старый
+  if (!newLoginInput.trim().length) return; // если длина нового логина ! то ретернимся и оставляем старый
 
-  accountsStore.handleChangeLogin(i, newLoginInput);// если длина ок - вызываем ф-ию из стора и меняем логин у записи
+  accountsStore.handleChangeLogin(i, newLoginInput.trim());// если длина ок - вызываем ф-ию из стора и меняем логин у записи
 }
 
 const handleChangePassword = (i: number, e: any) => {
   const newPassInput: string = e.target.value; // берем значенеи из инпута
 
-  if (!newPassInput.length) return; // если длина нового пароля ! то ретернимся и оставляем старый
+  if (!newPassInput.trim().length) return; // если длина нового пароля ! то ретернимся и оставляем старый
 
-  accountsStore.handleChangePassword(i, newPassInput);// если длина ок - вызываем ф-ию из стора и меняем пароль у записи
+  accountsStore.handleChangePassword(i, newPassInput.trim());// если длина ок - вызываем ф-ию из стора и меняем пароль у записи
 }
 
 
 const formRef = ref<HTMLElement | null>(null);
 
 const check = () => {
-  if (props.account.type === 'Локальная' && !props.account.password) {
+  if (props.account.type === 'Локальная' && !props.account.password?.length) {
     accountsStore.handleChangeType('LDAP', props.index);
   }
 }
@@ -79,7 +79,6 @@ const handleClickOutside = (event: MouseEvent) => {
 
   // если клик внутри формы
   if (formRef.value && formRef.value.contains(target)) return;
-  // костыли реализации компонент vuetify
   if (target.closest('.v-overlay, .v-menu, .v-list, .v-select, .v-autocomplete')) return;
 
   // если точно вне формы
@@ -116,7 +115,7 @@ onBeforeUnmount(() => {
     ></v-select>
 
     <v-text-field
-        v-model="account.login"
+        v-model.trim="account.login"
         :class="['align-center', {'grid-span-2': account.type === 'LDAP'}]"
         density="compact"
         variant="outlined"
@@ -128,7 +127,7 @@ onBeforeUnmount(() => {
     <v-text-field
         v-if="account.type !== 'LDAP'"
         :disabled="account.type === 'LDAP'"
-        v-model="account.password"
+        v-model.trim="account.password"
         class="align-center"
         density="compact"
         variant="outlined"

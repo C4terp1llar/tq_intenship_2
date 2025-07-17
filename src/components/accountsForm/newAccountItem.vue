@@ -76,7 +76,7 @@ const handlePreventAccountCreation = () => {
     ></v-select>
 
     <v-text-field
-        v-model="login"
+        v-model.trim="login"
         :class="['align-center', {'grid-span-2': type === 'LDAP'}]"
         density="compact"
         variant="outlined"
@@ -88,7 +88,7 @@ const handlePreventAccountCreation = () => {
     <v-text-field
         v-if="type !== 'LDAP'"
         :disabled="type === 'LDAP'"
-        v-model="password"
+        v-model.trim="password"
         class="align-center"
         density="compact"
         variant="outlined"
