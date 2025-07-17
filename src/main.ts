@@ -1,6 +1,7 @@
-import './assets/default.scss'
+import './assets/style.scss'
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
+import {autoAnimatePlugin} from '@formkit/auto-animate/vue'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -19,5 +20,6 @@ const app = createApp(App)
 app.use(createPinia());
 
 app.use(vuetify);
+app.use(autoAnimatePlugin)
 
 app.mount('#app')

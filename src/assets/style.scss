@@ -1,0 +1,18 @@
+.accounts{
+  padding: 25px 10%;
+}
+.accounts__item{
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 40px;
+  grid-template-rows: 1fr;
+  gap: 15px;
+}
+
+// общие классы
+.grid-span-2{
+  grid-column: span 2;
+}
+.mt2{
+  margin-top: 2px;
+}

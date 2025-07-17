@@ -1,4 +1,4 @@
 export const rules = {
-  required: (value: string) => !!value || 'Поле обязательно',
+  required: (value: string | null) => !!value || 'Поле обязательно',
 
 }

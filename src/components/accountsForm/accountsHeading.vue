@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="grid-container-ready pt-3 pb-3">
+  <div class="accounts__item pt-3 pb-3">
     <div class="w-100 heading-block">
       <span>Метки</span>
     </div>

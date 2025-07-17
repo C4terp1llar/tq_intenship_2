@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@mdi/font": "^7.4.47",
     "pinia": "^2.1.7",
     "sass": "^1.77.8",

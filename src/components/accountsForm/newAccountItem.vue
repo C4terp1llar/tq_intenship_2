@@ -2,6 +2,7 @@
 import {rules} from "@/utils/textValidation";
 import {ref} from "vue";
 import {useAccountsStore} from "@/stores/accounts";
+import {vAutoAnimate} from '@formkit/auto-animate';
 
 const accountsStore = useAccountsStore();
 
@@ -48,14 +49,18 @@ const clearFields = () => {
   login.value = '';
   password.value = '';
 }
+
+const handlePreventAccountCreation = () => {
+  accountsStore.additionFlag = !accountsStore.additionFlag
+}
 </script>
 
 <template>
-  <div class="grid-container pb-2">
+  <v-form @submit.prevent="handleSubmit" class="accounts__item" v-auto-animate>
     <v-text-field
         v-model="tags"
         class="align-center"
-        density="comfortable"
+        density="compact"
         variant="outlined"
         maxlength="50"
         @focusout="handleSubmitTag"
@@ -65,15 +70,15 @@ const clearFields = () => {
         v-model="type"
         :items="['LDAP', 'Локальная']"
         class="align-center"
-        density="comfortable"
+        density="compact"
         variant="outlined"
         @focusout="handleSubmit"
     ></v-select>
 
     <v-text-field
         v-model="login"
-        class="align-center"
-        density="comfortable"
+        :class="['align-center', {'grid-span-2': type === 'LDAP'}]"
+        density="compact"
         variant="outlined"
         maxlength="100"
         :rules="[rules.required(login)]"
@@ -81,10 +86,11 @@ const clearFields = () => {
     ></v-text-field>
 
     <v-text-field
+        v-if="type !== 'LDAP'"
         :disabled="type === 'LDAP'"
         v-model="password"
         class="align-center"
-        density="comfortable"
+        density="compact"
         variant="outlined"
         maxlength="100"
         :rules="[rules.required(password)]"
@@ -93,7 +99,9 @@ const clearFields = () => {
         @click:append-inner="isPasswordVisible = !isPasswordVisible"
         @focusout="handleSubmit"
     ></v-text-field>
-  </div>
+
+    <v-btn density="comfortable" icon="mdi-arrow-u-left-top" class="mt2" color="warning" @click="handlePreventAccountCreation"></v-btn>
+  </v-form>
 </template>
 
 <style scoped>

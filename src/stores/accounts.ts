@@ -1,15 +1,15 @@
 import {ref, reactive, watch} from 'vue';
 import { defineStore } from 'pinia';
-import type { AccountsList } from "@/types/interfaces";
+import type { IAccount } from "@/types";
 
 const LOCAL_STORAGE_KEY = 'accountsList';
 
 export const useAccountsStore = defineStore('accounts', () => {
 
-  const loadFromLocalStorage = (): AccountsList[] => {
+  const loadFromLocalStorage = (): IAccount[] => {
     const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedData) {
-      return JSON.parse(storedData) as AccountsList[];
+      return JSON.parse(storedData) as IAccount[];
     }
     return [];
   };
@@ -18,8 +18,7 @@ export const useAccountsStore = defineStore('accounts', () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(accountsList));
   };
 
-
-  const accountsList = reactive<AccountsList[]>(loadFromLocalStorage());
+  const accountsList = reactive<IAccount[]>(loadFromLocalStorage());
 
   const additionFlag = ref<boolean>(false);
 
@@ -37,6 +36,11 @@ export const useAccountsStore = defineStore('accounts', () => {
     saveToLocalStorage();
   };
 
+  const handleChangeType = (type: 'Локальная' | 'LDAP', i: number) => {
+    accountsList[i].type = type;
+    saveToLocalStorage();
+  };
+
   const handleChangePassword = (i: number, newPassword: string) => {
     accountsList[i].password = newPassword;
     saveToLocalStorage();
@@ -47,7 +51,7 @@ export const useAccountsStore = defineStore('accounts', () => {
     saveToLocalStorage();
   };
 
-  const addNewAccount = (newAccount: AccountsList) => {
+  const addNewAccount = (newAccount: IAccount) => {
     accountsList.push(newAccount);
     saveToLocalStorage();
   }
@@ -66,6 +70,7 @@ export const useAccountsStore = defineStore('accounts', () => {
     handleChangePassword,
     handleChangeLogin,
     addNewAccount,
-    deleteAccount
+    deleteAccount,
+    handleChangeType
   };
 });

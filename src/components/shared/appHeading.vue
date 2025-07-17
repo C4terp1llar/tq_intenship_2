@@ -12,16 +12,14 @@ const handleClick = () => {
     <h1>
       Учетные записи
     </h1>
+
     <v-btn
         icon="mdi-plus"
         :disabled="accountsStore.additionFlag"
         color="primary"
         variant="outlined"
         @click="handleClick"
-    >
-
-    </v-btn>
-
+    />
   </v-container>
 </template>
 
